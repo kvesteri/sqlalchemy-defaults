@@ -8,11 +8,17 @@ What does it do?
 
 * By setting default values for your int/str/bool columns, SQLAlchemy-Defaults automatically
 also sets server_default values
+
 * Unlike SQLAlchemy, all string columns are not nullable by default. Why? An empty string should be '' instead of None.
+
 * Unlike SQLAlchemy, all boolean columns are not nullable and False by default.
+
 * Provides auto_now feature for datetime columns
+
 * Automatically assigns names for enum types which doesn't have the name set
+
 * Easy min/max check constraints based on min and max column info arguments
+
 
 So instead of writing this: ::
 
