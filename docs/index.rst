@@ -62,7 +62,7 @@ So instead of writing this: ::
         )
 
 
-You can simply write:
+You can simply write: ::
 
 
     import sqlalchemy as sa
