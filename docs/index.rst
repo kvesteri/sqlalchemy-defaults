@@ -6,8 +6,7 @@ SQLAlchemy-Defaults is a plugin for SQLAlchemy that provides smart defaults for 
 What does it do?
 ----------------
 
-* By setting default values for your int/str/bool columns, SQLAlchemy-Defaults automatically
-also sets server_default values
+* By setting default values for your int/str/bool columns, SQLAlchemy-Defaults automatically also sets server_default values
 
 * Unlike SQLAlchemy, all string columns are not nullable by default. Why? An empty string should be '' instead of None.
 
