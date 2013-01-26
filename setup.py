@@ -23,8 +23,8 @@ class PyTest(Command):
         raise SystemExit(errno)
 
 setup(
-    name='SQLAchemy-Defaults',
-    version='0.1.1',
+    name='SQLAlchemy-Defaults',
+    version='0.1.2',
     url='https://github.com/kvesteri/sqlalchemy-defaults',
     license='BSD',
     author='Konsta Vesterinen',

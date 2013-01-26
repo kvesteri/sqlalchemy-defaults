@@ -25,7 +25,7 @@ class Column(sa.Column):
         kwargs['info'].setdefault('auto_now', kwargs.pop('auto_now', False))
 
         # Make strings and booleans not nullable by default
-        if is_string(args[0]) or isinstance(args[0], sa.Boolean):
+        if args and is_string(args[0]) or isinstance(args[0], sa.Boolean):
             kwargs.setdefault('nullable', False)
 
         sa.Column.__init__(self, *args, **kwargs)
