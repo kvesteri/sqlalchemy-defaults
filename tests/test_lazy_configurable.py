@@ -1,12 +1,10 @@
-from datetime import datetime
-
 import sqlalchemy as sa
-from sqlalchemy import Column, Boolean, Integer, Unicode, create_engine
+from sqlalchemy import Boolean, Integer, Unicode, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import false, true
 
-from sqlalchemy_defaults import LazyConfigured, lazy_config_listener
+from sqlalchemy_defaults import Column, LazyConfigured, lazy_config_listener
 
 
 class TestCase(object):
@@ -121,7 +119,6 @@ class TestLazyConfigurableOptionOverriding(TestCase):
         assert is_active.server_default is None
 
     def test_string_defaults(self):
-        assert self.columns.name.nullable is True
         assert self.columns.hobbies.server_default is None
 
     def test_integer_defaults(self):

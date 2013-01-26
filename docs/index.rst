@@ -71,32 +71,33 @@ You can simply write: ::
 
 
     import sqlalchemy as sa
-    from sqlalchemy_defaults import LazyConfigured
+    from sqlalchemy_defaults import LazyConfigured, Column
 
 
     class User(Base, LazyConfigured):
-        id = sa.Column(sa.Integer, primary_key=True)
+        id = Column(sa.Integer, primary_key=True)
 
-        name = sa.Column(
+        name = Column(
             sa.Unicode(255),
         )
-        description = sa.Column(
+        description = Column(
             sa.Unicode(255),
             default=u'',
         )
 
-        is_admin = sa.Column(
+        is_admin = Column(
             sa.Boolean,
         )
 
-        created_at = sa.Column(
+        created_at = Column(
             sa.DateTime,
-            info={'auto_now': True}
+            auto_now=True
         )
 
         hobbies = sa.Column(
             sa.Integer,
-            info={'min': 1, 'max': 4}
+            min=1,
+            max=4
         )
 
 

@@ -24,7 +24,7 @@ class PyTest(Command):
 
 setup(
     name='SQLAchemy-Defaults',
-    version='0.1.0',
+    version='0.1.1',
     url='https://github.com/kvesteri/sqlalchemy-defaults',
     license='BSD',
     author='Konsta Vesterinen',
