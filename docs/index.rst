@@ -94,10 +94,17 @@ You can simply write: ::
             auto_now=True
         )
 
-        hobbies = sa.Column(
+        hobbies = Column(
             sa.Integer,
             min=1,
             max=4
         )
 
+After you've defined all your models you need to attach lazy_config_listener as follows:
+::
 
+
+    from sqlalchemy_defaults import lazy_config_listener
+
+
+    sa.event.listen(sa.orm.mapper, 'mapper_configured', lazy_config_listener)
