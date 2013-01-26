@@ -124,6 +124,14 @@ def is_string(type_):
     )
 
 
+def is_integer(type_):
+    return (
+        isinstance(type_, sa.Integer) or
+        isinstance(type_, sa.SmallInteger) or
+        isinstance(type_, sa.BigInteger)
+    )
+
+
 def lazy_config_listener(mapper, class_):
     if issubclass(class_, LazyConfigured):
         table = class_.__table__
@@ -139,9 +147,7 @@ def lazy_config_listener(mapper, class_):
                     class_._get_lazy_option('string_defaults')):
                 assign_string_defaults(column)
 
-            elif ((isinstance(column.type, sa.Integer) or
-                    isinstance(column.type, sa.SmallInteger) or
-                    isinstance(column.type, sa.BigInteger)) and
+            elif (is_integer(column.type) and
                     class_._get_lazy_option('integer_defaults')):
                 assign_int_defaults(column)
 
