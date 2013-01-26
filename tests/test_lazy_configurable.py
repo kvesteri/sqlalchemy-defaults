@@ -38,6 +38,7 @@ class TestCase(object):
             is_admin = Column(Boolean, default=True)
             hobbies = Column(Unicode(255), default=u'football')
             created_at = Column(sa.DateTime, info={'auto_now': True})
+            description = Column(sa.UnicodeText)
 
             __lazy_options__ = options
 
@@ -77,6 +78,7 @@ class TestLazyConfigurableDefaults(TestCase):
 
     def test_strings_not_nullable(self):
         assert self.columns.name.nullable is False
+        assert self.columns.description.nullable is False
 
     def test_assigns_string_server_defaults(self):
         assert self.columns.hobbies.server_default.arg == u'football'

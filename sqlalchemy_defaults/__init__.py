@@ -120,7 +120,8 @@ def assign_boolean_defaults(column):
 def is_string(type_):
     return (
         isinstance(type_, sa.Unicode) or
-        isinstance(type_, sa.UnicodeText)
+        isinstance(type_, sa.UnicodeText) or
+        type_ is sa.UnicodeText
     )
 
 
