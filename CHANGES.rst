@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.1.5 (30.1.2013)
+^^^^^^^^^^^^^^^^^
+
+- Made is_string utility function support String and Text types
+
+
 0.1.4 (26.1.2013)
 ^^^^^^^^^^^^^^^^^
 

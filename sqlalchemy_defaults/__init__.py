@@ -121,7 +121,10 @@ def is_string(type_):
     return (
         isinstance(type_, sa.Unicode) or
         isinstance(type_, sa.UnicodeText) or
-        type_ is sa.UnicodeText
+        isinstance(type_, sa.String) or
+        isinstance(type_, sa.Text) or
+        type_ is sa.UnicodeText or
+        type_ is sa.Text
     )
 
 
