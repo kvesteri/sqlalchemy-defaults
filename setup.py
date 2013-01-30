@@ -38,6 +38,7 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
+        'psycopg2==2.4.6',
         'SQLAlchemy==0.7.8',
     ],
     cmdclass={'test': PyTest},
