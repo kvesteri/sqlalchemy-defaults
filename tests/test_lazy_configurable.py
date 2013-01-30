@@ -10,7 +10,7 @@ from sqlalchemy_defaults import Column, LazyConfigured, lazy_config_listener
 class TestCase(object):
     def setup_method(self, method):
         self.engine = create_engine(
-            'postgres://localhost/sqlalchemy_defaults_test'
+            'postgres://postgres@localhost/sqlalchemy_defaults_test'
         )
         self.Model = declarative_base()
 
