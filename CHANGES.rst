@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.1.6 (14.3.2013)
+^^^^^^^^^^^^^^^^^
+
+- Added form_field_class
+
+
 0.1.5 (30.1.2013)
 ^^^^^^^^^^^^^^^^^
 
