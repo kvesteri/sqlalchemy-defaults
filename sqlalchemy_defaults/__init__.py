@@ -23,6 +23,10 @@ class Column(sa.Column):
         kwargs['info'].setdefault('min', kwargs.pop('min', None))
         kwargs['info'].setdefault('max', kwargs.pop('max', None))
         kwargs['info'].setdefault('auto_now', kwargs.pop('auto_now', False))
+        kwargs['info'].setdefault(
+            'form_field_class',
+            kwargs.pop('form_field_class', None)
+        )
 
         # Make strings and booleans not nullable by default
         if args and (is_string(args[0]) or isinstance(args[0], sa.Boolean)):
