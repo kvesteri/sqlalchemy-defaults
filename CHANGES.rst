@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.1.7 (14.3.2013)
+^^^^^^^^^^^^^^^^^
+
+- Added choices as a column attribute
+
+
 0.1.6 (14.3.2013)
 ^^^^^^^^^^^^^^^^^
 

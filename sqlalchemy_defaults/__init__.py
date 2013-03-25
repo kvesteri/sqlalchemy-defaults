@@ -35,6 +35,10 @@ class Column(sa.Column):
         sa.Column.__init__(self, *args, **kwargs)
 
     @property
+    def choices(self):
+        return self.info['choices'] if 'choices' in self.info else []
+
+    @property
     def validators(self):
         return self.info['validators'] if 'validators' in self.info else []
 
