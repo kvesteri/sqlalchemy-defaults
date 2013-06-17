@@ -14,7 +14,7 @@ class TestCase(object):
         )
         self.Model = declarative_base()
 
-        self.User = self.create_user_model(**self.column_options)
+        self.create_models(**self.column_options)
         sa.orm.configure_mappers()
         self.columns = self.User.__table__.c
         self.Model.metadata.create_all(self.engine)
@@ -27,7 +27,7 @@ class TestCase(object):
         self.Model.metadata.drop_all(self.engine)
         self.engine.dispose()
 
-    def create_user_model(self, **options):
+    def create_models(self, **options):
         class User(self.Model):
             __tablename__ = 'user'
             __lazy_options__ = options
@@ -41,7 +41,15 @@ class TestCase(object):
             created_at = Column(sa.DateTime, info={'auto_now': True})
             description = Column(sa.UnicodeText)
 
-        return User
+        class Article(self.Model):
+            __tablename__ = 'article'
+            __lazy_options__ = options
+            id = Column(Integer, primary_key=True)
+            name = Column(Unicode(255))
+            author_id = Column(Integer, sa.ForeignKey(User.id))
+
+        self.User = User
+        self.Article = Article
 
 
 make_lazy_configured(
@@ -90,6 +98,9 @@ class TestLazyConfigurableDefaults(TestCase):
             created_at.server_default.arg.__class__ ==
             sa.func.now().__class__
         )
+
+    def test_assigns_indexes_for_foreign_keys(self):
+        assert self.Article.__table__.c.author_id.index is True
 
 
 class TestLazyConfigurableOptionOverriding(TestCase):

@@ -90,7 +90,7 @@ class ModelConfigurator(object):
         Assign index for column if column has foreign key constraints.
         """
         if column.foreign_keys:
-            assert 0
+            column.index = True
 
     def assign_datetime_auto_now(self, column):
         """

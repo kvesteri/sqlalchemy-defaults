@@ -18,6 +18,8 @@ What does it do?
 
 * Easy min/max check constraints based on min and max column info arguments
 
+* Auto creates indexes for foreign key columns (very useful when using PostgreSQL)
+
 
 So instead of writing this: ::
 
@@ -67,14 +69,15 @@ So instead of writing this: ::
         )
 
 
-You can simply write: ::
+You can simply write (notice here how we define an empty __lazy_options__ dict): ::
 
 
     import sqlalchemy as sa
-    from sqlalchemy_defaults import LazyConfigured, Column
+    from sqlalchemy_defaults import Column
 
 
-    class User(Base, LazyConfigured):
+    class User(Base):
+        __lazy_options__ = {}
         id = Column(sa.Integer, primary_key=True)
 
         name = Column(
@@ -100,11 +103,11 @@ You can simply write: ::
             max=4
         )
 
-After you've defined all your models you need to attach lazy_config_listener as follows:
+After you've defined all your models you need to make desired mapper lazy configured (or you can simple make all mappers lazy configured by passing sa.orm.mapper as the first argument):
 ::
 
 
-    from sqlalchemy_defaults import lazy_config_listener
+    from sqlalchemy_defaults import make_lazy_configured
 
 
-    sa.event.listen(sa.orm.mapper, 'mapper_configured', lazy_config_listener)
+    make_lazy_configured(sa.orm.mapper)
