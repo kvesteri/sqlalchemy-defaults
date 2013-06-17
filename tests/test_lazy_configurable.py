@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import false, true
 
-from sqlalchemy_defaults import Column, LazyConfigured, lazy_config_listener
+from sqlalchemy_defaults import Column, make_lazy_configured
 
 
 class TestCase(object):
@@ -28,8 +28,9 @@ class TestCase(object):
         self.engine.dispose()
 
     def create_user_model(self, **options):
-        class User(self.Model, LazyConfigured):
+        class User(self.Model):
             __tablename__ = 'user'
+            __lazy_options__ = options
 
             id = Column(Integer, primary_key=True)
             name = Column(Unicode(255))
@@ -40,15 +41,11 @@ class TestCase(object):
             created_at = Column(sa.DateTime, info={'auto_now': True})
             description = Column(sa.UnicodeText)
 
-            __lazy_options__ = options
-
         return User
 
 
-sa.event.listen(
-    sa.orm.mapper,
-    'mapper_configured',
-    lazy_config_listener
+make_lazy_configured(
+    sa.orm.mapper
 )
 
 

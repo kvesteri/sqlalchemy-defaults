@@ -2,8 +2,6 @@ from sqlalchemy import Column, Boolean, Integer, Unicode, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from sqlalchemy_defaults import LazyConfigured
-
 
 class TestCase(object):
     def setup_method(self, method):
@@ -22,7 +20,8 @@ class TestCase(object):
         self.engine.dispose()
 
     def create_account_model(self, **options):
-        class User(self.Model, LazyConfigured):
+        class User(self.Model):
+            __lazy_options__ = {}
             __tablename__ = 'posts'
 
             id = Column(Integer, primary_key=True)
@@ -36,14 +35,3 @@ class TestCase(object):
                 self.title = title
 
         return User
-
-
-class TestLazyConfigurable(TestCase):
-    column_options = {}
-
-    def test_creates_min_and_max_check_constraints(self):
-        from sqlalchemy.schema import CreateTable
-
-        print CreateTable(self.User)
-
-
