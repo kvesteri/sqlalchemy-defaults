@@ -38,6 +38,11 @@ class TestCase(object):
             is_active = Column(Boolean)
             is_admin = Column(Boolean, default=True)
             hobbies = Column(Unicode(255), default=u'football')
+            favorite_hobbies = Column(Unicode(255), default=lambda ctx: (
+                ctx.current_parameters['hobbies']
+                if ctx.current_parameters['hobbies'] is not None
+                else u'football'
+            ))
             created_at = Column(sa.DateTime, info={'auto_now': True})
             description = Column(sa.UnicodeText)
 
@@ -87,6 +92,9 @@ class TestLazyConfigurableDefaults(TestCase):
 
     def test_assigns_string_server_defaults(self):
         assert self.columns.hobbies.server_default.arg == u'football'
+
+    def test_doesnt_assign_string_server_defaults_for_callables(self):
+        assert self.columns.favorite_hobbies.server_default is None
 
     def test_assigns_int_server_defaults(self):
         assert self.columns.age.server_default.arg == '16'
