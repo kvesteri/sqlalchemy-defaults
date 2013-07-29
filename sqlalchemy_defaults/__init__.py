@@ -115,7 +115,8 @@ class ModelConfigurator(object):
         """
         Assigns string column server_default based on column default value
         """
-        if column.default is not None:
+        if column.default is not None and (
+                isinstance(column.default.arg, basestring)):
             column.server_default = sa.schema.DefaultClause(column.default.arg)
 
     def assign_boolean_defaults(self, column):
