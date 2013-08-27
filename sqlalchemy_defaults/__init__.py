@@ -2,6 +2,9 @@ from datetime import datetime
 import sqlalchemy as sa
 
 
+__version__ = '0.2.1'
+
+
 class Column(sa.Column):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('info', {})
@@ -115,9 +118,12 @@ class ModelConfigurator(object):
         """
         Assigns string column server_default based on column default value
         """
-        if column.default is not None and (
-                isinstance(column.default.arg, basestring)):
-            column.server_default = sa.schema.DefaultClause(column.default.arg)
+        if column.default is not None:
+            if (isinstance(column.default.arg, basestring) or
+                    isinstance(column.default.arg, int)):
+                column.server_default = sa.schema.DefaultClause(
+                    str(column.default.arg)
+                )
 
     def assign_boolean_defaults(self, column):
         """
