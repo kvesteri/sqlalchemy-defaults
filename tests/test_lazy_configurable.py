@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sqlalchemy as sa
 from sqlalchemy import Boolean, Integer, Unicode, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -43,6 +44,7 @@ class TestCase(object):
                 if ctx.current_parameters['hobbies'] is not None
                 else u'football'
             ))
+            favorite_buddy = Column(Unicode(255), default=u'Örrimörri')
             created_at = Column(sa.DateTime, info={'auto_now': True})
             description = Column(sa.UnicodeText)
 
@@ -68,7 +70,7 @@ class TestLazyConfigurableDefaults(TestCase):
     def test_creates_min_and_max_check_constraints(self):
         from sqlalchemy.schema import CreateTable
 
-        sql = str(CreateTable(self.User.__table__).compile(self.engine))
+        sql = unicode(CreateTable(self.User.__table__).compile(self.engine))
         assert 'CHECK (age >= 13)' in sql
         assert 'CHECK (age <= 120)' in sql
 

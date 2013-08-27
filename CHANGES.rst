@@ -4,6 +4,13 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.2.2 (2013-08-27)
+^^^^^^^^^^^^^^^^^^
+
+- Added unicode support for string defaults
+- Dropped Python 2.5 support
+
+
 0.2.1 (2013-08-27)
 ^^^^^^^^^^^^^^^^^^
 
