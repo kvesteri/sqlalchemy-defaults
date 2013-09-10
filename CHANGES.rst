@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.2.3 (2013-09-10)
+^^^^^^^^^^^^^^^^^^
+
+- Better checking of boolean and string types for not nullable defaults
+
+
 0.2.2 (2013-08-27)
 ^^^^^^^^^^^^^^^^^^
 

@@ -1,8 +1,9 @@
 from datetime import datetime
+from inspect import isclass
 import sqlalchemy as sa
 
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 
 class Column(sa.Column):
@@ -22,8 +23,12 @@ class Column(sa.Column):
         )
 
         # Make strings and booleans not nullable by default
-        if args and (is_string(args[0]) or isinstance(args[0], sa.Boolean)):
-            kwargs.setdefault('nullable', False)
+        if args:
+            if (
+                any([bool_or_str(arg) for arg in args[0:2]]) or
+                ('type' in kwargs and bool_or_str(kwargs['type']))
+            ):
+                kwargs.setdefault('nullable', False)
 
         sa.Column.__init__(self, *args, **kwargs)
 
@@ -176,22 +181,28 @@ class ModelConfigurator(object):
             self.assign_type_defaults(column)
 
 
+def bool_or_str(type_):
+    return is_string(type_) or is_boolean(type_)
+
+
 def is_string(type_):
     return (
-        isinstance(type_, sa.Unicode) or
-        isinstance(type_, sa.UnicodeText) or
         isinstance(type_, sa.String) or
-        isinstance(type_, sa.Text) or
-        type_ is sa.UnicodeText or
-        type_ is sa.Text
+        (isclass(type_) and issubclass(type_, sa.String))
+    )
+
+
+def is_boolean(type_):
+    return (
+        isinstance(type_, sa.Boolean) or
+        (isclass(type_) and issubclass(type_, sa.Boolean))
     )
 
 
 def is_integer(type_):
     return (
         isinstance(type_, sa.Integer) or
-        isinstance(type_, sa.SmallInteger) or
-        isinstance(type_, sa.BigInteger)
+        (isclass(type_) and issubclass(type_, sa.Integer))
     )
 
 

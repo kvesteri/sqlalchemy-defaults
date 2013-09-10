@@ -130,7 +130,7 @@ class TestLazyConfigurableOptionOverriding(TestCase):
         assert 'CHECK (age <= 120)' not in sql
 
     def test_booleans_defaults(self):
-        assert self.columns.is_active.nullable is True
+        assert self.columns.is_active.nullable is False
         assert self.columns.is_active.default is None
 
         is_admin = self.columns.is_admin
