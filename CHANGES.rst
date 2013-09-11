@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.2.4 (2013-09-11)
+^^^^^^^^^^^^^^^^^^
+
+- Booleans no longer force set to not nullable (not nullable is still the default for this data type)
+
+
 0.2.3 (2013-09-10)
 ^^^^^^^^^^^^^^^^^^
 

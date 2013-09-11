@@ -37,6 +37,7 @@ class TestCase(object):
             name = Column(Unicode(255))
             age = Column(Integer, info={'min': 13, 'max': 120}, default=16)
             is_active = Column(Boolean)
+            nullable_boolean = Column(Boolean, nullable=True)
             is_admin = Column(Boolean, default=True)
             hobbies = Column(Unicode(255), default=u'football')
             favorite_hobbies = Column(Unicode(255), default=lambda ctx: (
@@ -74,8 +75,11 @@ class TestLazyConfigurableDefaults(TestCase):
         assert 'CHECK (age >= 13)' in sql
         assert 'CHECK (age <= 120)' in sql
 
-    def test_booleans_not_nullable(self):
+    def test_booleans_not_nullable_by_default(self):
         assert self.columns.is_active.nullable is False
+
+    def test_supports_nullable_booleans(self):
+        assert self.columns.nullable_boolean.nullable
 
     def test_booleans_false(self):
         assert self.columns.is_active.default.arg is False

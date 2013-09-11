@@ -3,7 +3,7 @@ from inspect import isclass
 import sqlalchemy as sa
 
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 
 class Column(sa.Column):
@@ -134,8 +134,6 @@ class ModelConfigurator(object):
         """
         Assigns int column server_default based on column default value
         """
-        column.nullable = False
-
         if column.default is None:
             column.default = sa.schema.ColumnDefault(False)
 
