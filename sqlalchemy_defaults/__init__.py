@@ -115,7 +115,7 @@ class ModelConfigurator(object):
         """
         if column.default is not None:
             if (isinstance(column.default.arg, six.text_type) or
-                    isinstance(column.default.arg, int)):
+                    isinstance(column.default.arg, six.integer_types)):
                 column.server_default = sa.schema.DefaultClause(
                     six.text_type(column.default.arg)
                 )
