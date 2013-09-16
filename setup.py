@@ -1,5 +1,5 @@
 """
-sqlalchemy-defaults
+SQLAlchemy-Defaults
 -------------------
 
 Smart SQLAlchemy defaults for lazy guys, like me.
@@ -38,6 +38,7 @@ setup(
     include_package_data=True,
     platforms='any',
     install_requires=[
+        'six',
         'psycopg2>=2.4.6',
         'SQLAlchemy>=0.7.8',
     ],

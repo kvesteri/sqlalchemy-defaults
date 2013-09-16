@@ -1,5 +1,6 @@
 from datetime import datetime
 from inspect import isclass
+import six
 import sqlalchemy as sa
 
 
@@ -113,10 +114,10 @@ class ModelConfigurator(object):
         Assigns int column server_default based on column default value
         """
         if column.default is not None:
-            if (isinstance(column.default.arg, basestring) or
+            if (isinstance(column.default.arg, six.text_type) or
                     isinstance(column.default.arg, int)):
                 column.server_default = sa.schema.DefaultClause(
-                    str(column.default.arg)
+                    six.text_type(column.default.arg)
                 )
 
     def assign_string_defaults(self, column):
@@ -124,7 +125,7 @@ class ModelConfigurator(object):
         Assigns string column server_default based on column default value
         """
         if column.default is not None and (
-            isinstance(column.default.arg, basestring)
+            isinstance(column.default.arg, six.text_type)
         ):
             column.server_default = sa.schema.DefaultClause(
                 column.default.arg
