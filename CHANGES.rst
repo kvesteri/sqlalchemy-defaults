@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.3.0 (2013-09-17)
+^^^^^^^^^^^^^^^^^^
+
+- Python 3 support added
+
+
 0.2.4 (2013-09-11)
 ^^^^^^^^^^^^^^^^^^
 
