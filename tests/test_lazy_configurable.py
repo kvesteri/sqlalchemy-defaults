@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import six
 import sqlalchemy as sa
 from sqlalchemy import Boolean, Integer, Unicode, create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -71,7 +72,9 @@ class TestLazyConfigurableDefaults(TestCase):
     def test_creates_min_and_max_check_constraints(self):
         from sqlalchemy.schema import CreateTable
 
-        sql = unicode(CreateTable(self.User.__table__).compile(self.engine))
+        sql = six.text_type(
+            CreateTable(self.User.__table__).compile(self.engine)
+        )
         assert 'CHECK (age >= 13)' in sql
         assert 'CHECK (age <= 120)' in sql
 
