@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.3.1 (2013-10-10)
+^^^^^^^^^^^^^^^^^^
+
+- Label no longer available as column property (this was in conflict with SQLAlchemy's own label construct)
+
+
 0.3.0 (2013-09-17)
 ^^^^^^^^^^^^^^^^^^
 

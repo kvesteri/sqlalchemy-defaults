@@ -4,7 +4,7 @@ import six
 import sqlalchemy as sa
 
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 
 class Column(sa.Column):
@@ -40,10 +40,6 @@ class Column(sa.Column):
     @property
     def validators(self):
         return self.info['validators'] if 'validators' in self.info else []
-
-    @property
-    def label(self):
-        return self.info['label'] if 'label' in self.info else ''
 
     @property
     def description(self):
