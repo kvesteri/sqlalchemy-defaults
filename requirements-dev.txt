@@ -1,6 +1,0 @@
--r requirements.txt
-psycopg2==2.4.6
-pytest==2.2.3
-Pygments==1.2
-Jinja2==2.3
-docutils>=0.10
