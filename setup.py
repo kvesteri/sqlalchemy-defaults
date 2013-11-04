@@ -37,7 +37,7 @@ extras_require = {
 
 setup(
     name='SQLAlchemy-Defaults',
-    version='0.3.1',
+    version='0.3.2',
     url='https://github.com/kvesteri/sqlalchemy-defaults',
     license='BSD',
     author='Konsta Vesterinen',

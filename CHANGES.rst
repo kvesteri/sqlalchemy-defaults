@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.3.2 (2013-11-04)
+^^^^^^^^^^^^^^^^^^
+
+- Psycopg2 removed from requirements
+
+
 0.3.1 (2013-10-10)
 ^^^^^^^^^^^^^^^^^^
 
