@@ -1,73 +1,45 @@
 # -*- coding: utf-8 -*-
 import six
 import sqlalchemy as sa
-from sqlalchemy import Boolean, Integer, Unicode, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql.expression import false, true
 
-from sqlalchemy_defaults import Column, make_lazy_configured
+from sqlalchemy_defaults import Column
+from tests import TestCase
 
 
-class TestCase(object):
-    def setup_method(self, method):
-        self.engine = create_engine(
-            'postgres://postgres@localhost/sqlalchemy_defaults_test'
-        )
-        self.Model = declarative_base()
-
-        self.create_models(**self.column_options)
-        sa.orm.configure_mappers()
-        self.columns = self.User.__table__.c
-        self.Model.metadata.create_all(self.engine)
-
-        Session = sessionmaker(bind=self.engine)
-        self.session = Session()
-
-    def teardown_method(self, method):
-        self.session.close_all()
-        self.Model.metadata.drop_all(self.engine)
-        self.engine.dispose()
+class TestLazyConfigurableDefaults(TestCase):
+    column_options = {}
 
     def create_models(self, **options):
         class User(self.Model):
             __tablename__ = 'user'
             __lazy_options__ = options
 
-            id = Column(Integer, primary_key=True)
-            name = Column(Unicode(255))
-            age = Column(Integer, info={'min': 13, 'max': 120}, default=16)
-            is_active = Column(Boolean)
-            nullable_boolean = Column(Boolean, nullable=True)
-            is_admin = Column(Boolean, default=True)
-            hobbies = Column(Unicode(255), default=u'football')
-            favorite_hobbies = Column(Unicode(255), default=lambda ctx: (
+            id = Column(sa.Integer, primary_key=True)
+            name = Column(sa.Unicode(255))
+            age = Column(sa.Integer, info={'min': 13, 'max': 120}, default=16)
+            is_active = Column(sa.Boolean)
+            nullable_boolean = Column(sa.Boolean, nullable=True)
+            is_admin = Column(sa.Boolean, default=True)
+            hobbies = Column(sa.Unicode(255), default=u'football')
+            favorite_hobbies = Column(sa.Unicode(255), default=lambda ctx: (
                 ctx.current_parameters['hobbies']
                 if ctx.current_parameters['hobbies'] is not None
                 else u'football'
             ))
-            favorite_buddy = Column(Unicode(255), default=u'Örrimörri')
+            favorite_buddy = Column(sa.Unicode(255), default=u'Örrimörri')
             created_at = Column(sa.DateTime, info={'auto_now': True})
             description = Column(sa.UnicodeText)
 
         class Article(self.Model):
             __tablename__ = 'article'
             __lazy_options__ = options
-            id = Column(Integer, primary_key=True)
-            name = Column(Unicode(255))
-            author_id = Column(Integer, sa.ForeignKey(User.id))
+            id = Column(sa.Integer, primary_key=True)
+            name = Column(sa.Unicode(255))
+            author_id = Column(sa.Integer, sa.ForeignKey(User.id))
 
         self.User = User
         self.Article = Article
-
-
-make_lazy_configured(
-    sa.orm.mapper
-)
-
-
-class TestLazyConfigurableDefaults(TestCase):
-    column_options = {}
 
     def test_creates_min_and_max_check_constraints(self):
         from sqlalchemy.schema import CreateTable
@@ -99,12 +71,6 @@ class TestLazyConfigurableDefaults(TestCase):
         assert self.columns.name.nullable is False
         assert self.columns.description.nullable is False
 
-    def test_assigns_string_server_defaults(self):
-        assert self.columns.hobbies.server_default.arg == u'football'
-
-    def test_doesnt_assign_string_server_defaults_for_callables(self):
-        assert self.columns.favorite_hobbies.server_default is None
-
     def test_assigns_int_server_defaults(self):
         assert self.columns.age.server_default.arg == '16'
 
@@ -128,6 +94,37 @@ class TestLazyConfigurableOptionOverriding(TestCase):
         'boolean_defaults': False,
         'auto_now': False
     }
+
+    def create_models(self, **options):
+        class User(self.Model):
+            __tablename__ = 'user'
+            __lazy_options__ = options
+
+            id = Column(sa.Integer, primary_key=True)
+            name = Column(sa.Unicode(255))
+            age = Column(sa.Integer, info={'min': 13, 'max': 120}, default=16)
+            is_active = Column(sa.Boolean)
+            nullable_boolean = Column(sa.Boolean, nullable=True)
+            is_admin = Column(sa.Boolean, default=True)
+            hobbies = Column(sa.Unicode(255), default=u'football')
+            favorite_hobbies = Column(sa.Unicode(255), default=lambda ctx: (
+                ctx.current_parameters['hobbies']
+                if ctx.current_parameters['hobbies'] is not None
+                else u'football'
+            ))
+            favorite_buddy = Column(sa.Unicode(255), default=u'Örrimörri')
+            created_at = Column(sa.DateTime, info={'auto_now': True})
+            description = Column(sa.UnicodeText)
+
+        class Article(self.Model):
+            __tablename__ = 'article'
+            __lazy_options__ = options
+            id = Column(sa.Integer, primary_key=True)
+            name = Column(sa.Unicode(255))
+            author_id = Column(sa.Integer, sa.ForeignKey(User.id))
+
+        self.User = User
+        self.Article = Article
 
     def test_check_constraints(self):
         from sqlalchemy.schema import CreateTable

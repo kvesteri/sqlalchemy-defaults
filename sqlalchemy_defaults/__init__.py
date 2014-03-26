@@ -120,7 +120,7 @@ class ModelConfigurator(object):
         """
         Assigns string column server_default based on column default value
         """
-        if column.default is not None and (
+        if column.default is not None and column.server_default is None and (
             isinstance(column.default.arg, six.text_type)
         ):
             column.server_default = sa.schema.DefaultClause(
