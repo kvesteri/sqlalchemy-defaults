@@ -16,9 +16,9 @@ make_lazy_configured(
 class TestCase(object):
     def get_dns_from_driver(self, driver):
         if driver == 'postgres':
-            return 'postgres://postgres@localhost/sqlalchemy_continuum_test'
+            return 'postgres://postgres@localhost/sqlalchemy_defaults_test'
         elif driver == 'mysql':
-            return 'mysql+pymysql://travis@localhost/sqlalchemy_continuum_test'
+            return 'mysql+pymysql://travis@localhost/sqlalchemy_defaults_test'
         elif driver == 'sqlite':
             return 'sqlite:///:memory:'
         else:
