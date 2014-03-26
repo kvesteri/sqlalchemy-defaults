@@ -77,9 +77,17 @@ class TestLazyConfigurableDefaults(TestCase):
     def test_assigns_auto_now_defaults(self):
         created_at = self.columns.created_at
         assert created_at.default
+        assert (
+            isinstance(created_at.server_default, sa.sql.functions.now)
+        )
 
     def test_assigns_indexes_for_foreign_keys(self):
         assert self.Article.__table__.c.author_id.index is True
+
+    def test_insert(self):
+        user = self.User(name=u'Someone', description=u'Some description')
+        self.session.add(user)
+        self.session.commit()
 
 
 class TestLazyConfigurableOptionOverriding(TestCase):
