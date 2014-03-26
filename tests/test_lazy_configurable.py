@@ -77,10 +77,6 @@ class TestLazyConfigurableDefaults(TestCase):
     def test_assigns_auto_now_defaults(self):
         created_at = self.columns.created_at
         assert created_at.default
-        assert (
-            created_at.server_default.arg.__class__ ==
-            sa.func.now().__class__
-        )
 
     def test_assigns_indexes_for_foreign_keys(self):
         assert self.Article.__table__.c.author_id.index is True

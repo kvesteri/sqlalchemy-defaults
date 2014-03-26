@@ -99,7 +99,6 @@ class ModelConfigurator(object):
         """
         if 'auto_now' in column.info and column.info['auto_now']:
             column.default = sa.schema.ColumnDefault(datetime.utcnow)
-            column.server_default = sa.schema.DefaultClause(sa.func.now())
 
     def assign_int_defaults(self, column):
         """

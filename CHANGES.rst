@@ -8,6 +8,7 @@ Here you can see the full list of changes between each SQLAlchemy-Defaults relea
 ^^^^^^^^^^^^^^^^^^
 
 - Added smarter string server_default inspection.
+- Remove server_default autonow setting (never worked on databases other than sqlite and postgres)
 
 
 0.3.2 (2013-11-04)
