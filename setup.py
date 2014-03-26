@@ -31,6 +31,7 @@ extras_require = {
         'docutils>=0.10',
         'flexmock>=0.9.7',
         'psycopg2>=2.4.6',
+        'PyMySQL==0.6.1',
     ]
 }
 
