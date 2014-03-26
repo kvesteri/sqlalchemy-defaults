@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.4.0 (2014-03-26)
+^^^^^^^^^^^^^^^^^^
+
+- Added smarter string server_default inspection.
+
+
 0.3.2 (2013-11-04)
 ^^^^^^^^^^^^^^^^^^
 

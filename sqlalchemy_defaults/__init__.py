@@ -4,7 +4,7 @@ import six
 import sqlalchemy as sa
 
 
-__version__ = '0.3.2'
+__version__ = '0.4.0'
 
 
 class Column(sa.Column):
@@ -18,10 +18,6 @@ class Column(sa.Column):
         kwargs['info'].setdefault('min', kwargs.pop('min', None))
         kwargs['info'].setdefault('max', kwargs.pop('max', None))
         kwargs['info'].setdefault('auto_now', kwargs.pop('auto_now', False))
-        kwargs['info'].setdefault(
-            'form_field_class',
-            kwargs.pop('form_field_class', None)
-        )
 
         # Make strings and booleans not nullable by default
         if args:
