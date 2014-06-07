@@ -97,7 +97,7 @@ class ModelConfigurator(object):
         """
         Assigns datetime auto now defaults
         """
-        if 'auto_now' in column.info and column.info['auto_now']:
+        if column.info.get('auto_now'):
             column.default = sa.schema.ColumnDefault(datetime.utcnow)
             if not column.server_default:
                 column.server_default = sa.func.now()
