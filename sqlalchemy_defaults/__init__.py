@@ -22,7 +22,7 @@ class Column(sa.Column):
         # Make strings and booleans not nullable by default
         if args:
             if (
-                any([bool_or_str(arg) for arg in args[0:2]]) or
+                any(bool_or_str(arg) for arg in args[0:2]) or
                 ('type' in kwargs and bool_or_str(kwargs['type']))
             ):
                 kwargs.setdefault('nullable', False)
