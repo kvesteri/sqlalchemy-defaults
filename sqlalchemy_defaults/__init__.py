@@ -4,7 +4,7 @@ import six
 import sqlalchemy as sa
 
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 
 class Column(sa.Column):
@@ -100,7 +100,7 @@ class ModelConfigurator(object):
         if column.info.get('auto_now'):
             column.default = sa.schema.ColumnDefault(datetime.utcnow)
             if not column.server_default:
-                column.server_default = sa.func.now()
+                column.server_default = sa.schema.DefaultClause(sa.func.now())
 
     def assign_int_defaults(self, column):
         """

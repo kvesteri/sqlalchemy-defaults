@@ -28,7 +28,6 @@ class TestLazyConfigurableDefaults(TestCase):
                 else u'football'
             ))
             favorite_buddy = Column(sa.Unicode(255), default=u'Örrimörri')
-            created_at = Column(sa.DateTime, info={'auto_now': True})
             description = Column(sa.UnicodeText)
 
         class Article(self.Model):
@@ -73,13 +72,6 @@ class TestLazyConfigurableDefaults(TestCase):
 
     def test_assigns_int_server_defaults(self):
         assert self.columns.age.server_default.arg == '16'
-
-    def test_assigns_auto_now_defaults(self):
-        created_at = self.columns.created_at
-        assert created_at.default
-        assert (
-            isinstance(created_at.server_default, sa.sql.functions.now)
-        )
 
     def test_assigns_indexes_for_foreign_keys(self):
         assert self.Article.__table__.c.author_id.index is True
