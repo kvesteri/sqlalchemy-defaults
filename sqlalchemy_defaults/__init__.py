@@ -100,6 +100,7 @@ class ModelConfigurator(object):
         if column.info.get('auto_now'):
             column.default = sa.schema.ColumnDefault(datetime.utcnow)
             if not column.server_default:
+                # Does not support MySQL < 5.6.5
                 column.server_default = sa.schema.DefaultClause(sa.func.now())
 
     def assign_int_defaults(self, column):
