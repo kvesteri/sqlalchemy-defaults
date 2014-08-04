@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.4.2 (2014-08-04)
+^^^^^^^^^^^^^^^^^^
+
+- Fixed sequence as integer default value handling.
+
+
 0.4.1 (2014-06-13)
 ^^^^^^^^^^^^^^^^^^
 
