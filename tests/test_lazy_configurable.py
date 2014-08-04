@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import six
 import sqlalchemy as sa
-from sqlalchemy.sql.expression import false, true
 
 from sqlalchemy_defaults import Column
 from tests import TestCase
@@ -48,27 +47,6 @@ class TestLazyConfigurableDefaults(TestCase):
         )
         assert 'CHECK (age >= 13)' in sql
         assert 'CHECK (age <= 120)' in sql
-
-    def test_booleans_not_nullable_by_default(self):
-        assert self.columns.is_active.nullable is False
-
-    def test_supports_nullable_booleans(self):
-        assert self.columns.nullable_boolean.nullable
-
-    def test_booleans_false(self):
-        assert self.columns.is_active.default.arg is False
-
-    def test_assigns_boolean_server_defaults(self):
-        is_admin = self.columns.is_admin
-        is_active = self.columns.is_active
-        assert is_admin.default.arg is True
-
-        assert is_admin.server_default.arg.__class__ == true().__class__
-        assert is_active.server_default.arg.__class__ == false().__class__
-
-    def test_strings_not_nullable(self):
-        assert self.columns.name.nullable is False
-        assert self.columns.description.nullable is False
 
     def test_assigns_int_server_defaults(self):
         assert self.columns.age.server_default.arg == '16'
