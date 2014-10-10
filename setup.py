@@ -5,22 +5,22 @@ SQLAlchemy-Defaults
 Smart SQLAlchemy defaults for lazy guys, like me.
 """
 
-from setuptools import setup, Command
-import subprocess
+import os
+import re
+import sys
+from setuptools import setup
 
 
-class PyTest(Command):
-    user_options = []
+PY3 = sys.version_info[0] == 3
+HERE = os.path.dirname(os.path.abspath(__file__))
 
-    def initialize_options(self):
-        pass
 
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        errno = subprocess.call(['py.test'])
-        raise SystemExit(errno)
+def get_version():
+    filename = os.path.join(HERE, 'sqlalchemy_defaults', '__init__.py')
+    with open(filename) as f:
+        contents = f.read()
+    pattern = r"^__version__ = '(.*?)'$"
+    return re.search(pattern, contents, re.MULTILINE).group(1)
 
 
 extras_require = {
@@ -38,7 +38,7 @@ extras_require = {
 
 setup(
     name='SQLAlchemy-Defaults',
-    version='0.4.3',
+    version=get_version(),
     url='https://github.com/kvesteri/sqlalchemy-defaults',
     license='BSD',
     author='Konsta Vesterinen',
@@ -56,7 +56,6 @@ setup(
         'SQLAlchemy>=0.7.8',
     ],
     extras_require=extras_require,
-    cmdclass={'test': PyTest},
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
