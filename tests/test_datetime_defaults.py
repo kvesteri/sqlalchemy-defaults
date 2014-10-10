@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
+from datetime import date, datetime
 import sqlalchemy as sa
 
 from sqlalchemy_defaults import Column
@@ -16,6 +16,9 @@ class TestDateTimeDefaults(TestCase):
 
             id = Column(sa.Integer, primary_key=True)
             created_at = Column(sa.DateTime, auto_now=True)
+            fav_day = Column(
+                sa.Date, min=date(2000, 1, 1), max=date(2099, 1, 1)
+            )
 
         self.User = User
 

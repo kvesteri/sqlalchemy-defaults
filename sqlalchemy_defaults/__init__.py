@@ -4,7 +4,7 @@ import six
 import sqlalchemy as sa
 
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 
 class Column(sa.Column):
@@ -77,12 +77,12 @@ class ModelConfigurator(object):
         """
         if 'min' in column.info and column.info['min'] is not None:
             constraint = sa.schema.CheckConstraint(
-                '%s >= %d' % (column.name, column.info['min'])
+                column >= column.info['min']
             )
             self.table.append_constraint(constraint)
         if 'max' in column.info and column.info['max'] is not None:
             constraint = sa.schema.CheckConstraint(
-                '%s <= %d' % (column.name, column.info['max'])
+                column <= column.info['max']
             )
             self.table.append_constraint(constraint)
 

@@ -4,6 +4,12 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.4.3 (2014-10-10)
+^^^^^^^^^^^^^^^^^^
+
+- Fixed check constraint handling for other than integer types
+
+
 0.4.2 (2014-08-04)
 ^^^^^^^^^^^^^^^^^^
 
