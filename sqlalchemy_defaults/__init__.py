@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from inspect import isclass
 import six
 import sqlalchemy as sa
@@ -71,18 +71,25 @@ class ModelConfigurator(object):
         except (AttributeError, KeyError):
             return self.manager.DEFAULT_OPTIONS[name]
 
+    def literal_value(self, value):
+        return (
+            value.isoformat()
+            if isinstance(value, (date, datetime))
+            else value
+        )
+
     def append_check_constraints(self, column):
         """
         Generate check constraints based on min and max column info arguments
         """
         if 'min' in column.info and column.info['min'] is not None:
             constraint = sa.schema.CheckConstraint(
-                column >= column.info['min']
+                column >= self.literal_value(column.info['min'])
             )
             self.table.append_constraint(constraint)
         if 'max' in column.info and column.info['max'] is not None:
             constraint = sa.schema.CheckConstraint(
-                column <= column.info['max']
+                column <= self.literal_value(column.info['max'])
             )
             self.table.append_constraint(constraint)
 
