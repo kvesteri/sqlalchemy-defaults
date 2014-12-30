@@ -4,7 +4,7 @@ import six
 import sqlalchemy as sa
 
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 
 class Column(sa.Column):
@@ -45,7 +45,7 @@ class Column(sa.Column):
 class ConfigurationManager(object):
     DEFAULT_OPTIONS = {
         'auto_now': True,
-        'integer_defaults': True,
+        'numeric_defaults': True,
         'string_defaults': True,
         'boolean_defaults': True,
         'min_max_check_constraints': True,
@@ -110,13 +110,12 @@ class ModelConfigurator(object):
                 # Does not support MySQL < 5.6.5
                 column.server_default = sa.schema.DefaultClause(sa.func.now())
 
-    def assign_int_defaults(self, column):
+    def assign_numeric_defaults(self, column):
         """
         Assigns int column server_default based on column default value
         """
         if column.default is not None and hasattr(column.default, 'arg'):
-            if (isinstance(column.default.arg, six.text_type) or
-                    isinstance(column.default.arg, six.integer_types)):
+            if not column.server_default:
                 column.server_default = sa.schema.DefaultClause(
                     six.text_type(column.default.arg)
                 )
@@ -157,8 +156,8 @@ class ModelConfigurator(object):
         elif (is_string(column.type) and self.get_option('string_defaults')):
             self.assign_string_defaults(column)
 
-        elif (is_integer(column.type) and self.get_option('integer_defaults')):
-            self.assign_int_defaults(column)
+        elif (is_numeric(column.type) and self.get_option('numeric_defaults')):
+            self.assign_numeric_defaults(column)
 
         elif ((isinstance(column.type, sa.Date) or
                 isinstance(column.type, sa.DateTime))
@@ -199,10 +198,10 @@ def is_boolean(type_):
     )
 
 
-def is_integer(type_):
-    return (
-        isinstance(type_, sa.Integer) or
-        (isclass(type_) and issubclass(type_, sa.Integer))
+def is_numeric(type_):
+    return any(
+        isinstance(type_, type_cls)
+        for type_cls in (sa.Integer, sa.Float, sa.Numeric)
     )
 
 

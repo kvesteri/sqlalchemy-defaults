@@ -64,7 +64,7 @@ class TestLazyConfigurableOptionOverriding(TestCase):
     column_options = {
         'min_max_check_constraints': False,
         'string_defaults': False,
-        'integer_defaults': False,
+        'numeric_defaults': False,
         'boolean_defaults': False,
         'auto_now': False
     }

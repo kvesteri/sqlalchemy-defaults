@@ -32,7 +32,8 @@ class TestCase(object):
 
         self.create_models(**self.column_options)
         sa.orm.configure_mappers()
-        self.columns = self.User.__table__.c
+        if hasattr(self, 'User'):
+            self.columns = self.User.__table__.c
         self.Model.metadata.create_all(self.engine)
 
         Session = sessionmaker(bind=self.engine)

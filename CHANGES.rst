@@ -4,6 +4,13 @@ Changelog
 Here you can see the full list of changes between each SQLAlchemy-Defaults release.
 
 
+0.4.4 (2014-12-30)
+^^^^^^^^^^^^^^^^^^
+
+- Added support for Numeric and Float defaults
+- Changed integer_defaults config option to numeric_defaults
+
+
 0.4.3 (2014-10-10)
 ^^^^^^^^^^^^^^^^^^
 
