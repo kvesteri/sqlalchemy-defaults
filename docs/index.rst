@@ -8,7 +8,7 @@ What does it do?
 
 * By setting default values for your int/str/bool columns, SQLAlchemy-Defaults automatically also sets server_default values
 
-* Unlike SQLAlchemy, all string columns are not nullable by default. Why? An empty string should be '' instead of None.
+* All string columns are not nullable by default.
 
 * Unlike SQLAlchemy, all boolean columns are not nullable and False by default.
 
