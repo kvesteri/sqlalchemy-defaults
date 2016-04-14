@@ -25,13 +25,13 @@ def get_version():
 
 extras_require = {
     'test': [
-        'pytest==2.2.3',
+        'pytest>=2.9.1',
         'Pygments>=1.2',
         'Jinja2>=2.3',
         'docutils>=0.10',
         'flexmock>=0.9.7',
         'psycopg2>=2.4.6',
-        'PyMySQL==0.6.1',
+        'PyMySQL>=0.7.2',
     ]
 }
 
@@ -68,6 +68,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ]

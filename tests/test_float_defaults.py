@@ -1,28 +1,33 @@
 # -*- coding: utf-8 -*-
+import pytest
 import sqlalchemy as sa
 
 from sqlalchemy_defaults import Column
-from tests import TestCase
 
 
-class TestFloatDefaults(TestCase):
-    column_options = {}
+@pytest.fixture
+def Account(Base, lazy_options):
+    class Account(Base):
+        __tablename__ = 'account'
+        __lazy_options__ = lazy_options
 
-    def create_models(self, **options):
-        class Account(self.Model):
-            __tablename__ = 'user'
-            __lazy_options__ = options
+        id = Column(sa.Integer, primary_key=True)
+        balance = Column(
+            sa.Float,
+            min=0,
+            max=120000,
+            default=0
+        )
+    return Account
 
-            id = Column(sa.Integer, primary_key=True)
-            balance = Column(
-                sa.Float,
-                min=0,
-                max=120000,
-                default=0
-            )
 
-        self.Account = Account
-        self.columns = Account.__table__.c
+@pytest.fixture
+def models(Account):
+    return [Account]
 
-    def test_assigns_real_server_defaults(self):
-        assert self.columns.balance.server_default.arg == '0'
+
+@pytest.mark.usefixtures('lazy_configured', 'Session')
+class TestFloatDefaults(object):
+
+    def test_assigns_real_server_defaults(self, Account):
+        assert Account.__table__.c.balance.server_default.arg == '0'

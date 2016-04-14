@@ -1,28 +1,34 @@
 # -*- coding: utf-8 -*-
+import pytest
 import sqlalchemy as sa
 
 from sqlalchemy_defaults import Column
-from tests import TestCase
 
 
-class TestNumericDefaults(TestCase):
-    column_options = {}
+@pytest.fixture
+def Account(Base, lazy_options):
+    class Account(Base):
+        __tablename__ = 'user'
+        __lazy_options__ = lazy_options
 
-    def create_models(self, **options):
-        class Account(self.Model):
-            __tablename__ = 'user'
-            __lazy_options__ = options
+        id = Column(sa.Integer, primary_key=True)
+        balance = Column(
+            sa.Numeric,
+            min=0,
+            max=2000,
+            default=100
+        )
+    return Account
 
-            id = Column(sa.Integer, primary_key=True)
-            balance = Column(
-                sa.Numeric,
-                min=0,
-                max=2000,
-                default=100
-            )
 
-        self.Account = Account
-        self.columns = Account.__table__.c
+@pytest.fixture
+def models(Account):
+    return [Account]
 
-    def test_assigns_real_server_defaults(self):
-        assert self.columns.balance.server_default.arg == '100'
+
+@pytest.mark.usefixtures('lazy_configured', 'Session')
+class TestNumericDefaults(object):
+
+    @pytest.fixture
+    def test_assigns_real_server_defaults(self, Account):
+        assert Account.__table__.c.balance.server_default.arg == '100'

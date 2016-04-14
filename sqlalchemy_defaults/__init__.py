@@ -1,8 +1,8 @@
 from datetime import date, datetime
 from inspect import isclass
+
 import six
 import sqlalchemy as sa
-
 
 __version__ = '0.4.4'
 
@@ -159,9 +159,13 @@ class ModelConfigurator(object):
         elif (is_numeric(column.type) and self.get_option('numeric_defaults')):
             self.assign_numeric_defaults(column)
 
-        elif ((isinstance(column.type, sa.Date) or
-                isinstance(column.type, sa.DateTime))
-                and self.get_option('auto_now')):
+        elif (
+            (
+                isinstance(column.type, sa.Date) or
+                isinstance(column.type, sa.DateTime)
+            ) and
+            self.get_option('auto_now')
+        ):
             self.assign_datetime_auto_now(column)
 
         elif (isinstance(column.type, sa.Enum) and

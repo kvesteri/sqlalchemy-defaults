@@ -1,39 +1,49 @@
 # -*- coding: utf-8 -*-
+import pytest
 import sqlalchemy as sa
 
 from sqlalchemy_defaults import Column
-from tests import TestCase
 
 
-class TestIntegerDefaults(TestCase):
-    column_options = {}
+@pytest.mark.usefixtures('lazy_configured', 'Session')
+class TestIntegerDefaults(object):
 
-    def create_models(self, **options):
-        class User(self.Model):
+    @pytest.fixture
+    def User(self, Base, lazy_options):
+        class User(Base):
             __tablename__ = 'user'
-            __lazy_options__ = options
+            __lazy_options__ = lazy_options
 
             id = Column(sa.Integer, primary_key=True)
             name = Column(sa.Unicode(255))
             age = Column(sa.Integer, info={'min': 13, 'max': 120}, default=16)
 
-        self.User = User
+        return User
 
-    def test_assigns_int_server_defaults(self):
-        assert self.columns.age.server_default.arg == '16'
+    @pytest.fixture
+    def models(self, User):
+        return [User]
+
+    def test_assigns_int_server_defaults(self, User):
+        assert User.__table__.c.age.server_default.arg == '16'
 
 
-class TestIntegerWithSequence(TestCase):
-    column_options = {}
+@pytest.mark.usefixtures('lazy_configured', 'Session')
+class TestIntegerWithSequence(object):
 
-    def create_models(self, **options):
-        class User(self.Model):
+    @pytest.fixture
+    def User(self, Base, lazy_options):
+        class User(Base):
             __tablename__ = 'user'
-            __lazy_options__ = options
+            __lazy_options__ = lazy_options
 
             id = Column(sa.Integer, sa.Sequence('id_seq'), primary_key=True)
 
-        self.User = User
+        return User
 
-    def test_assigns_int_server_defaults(self):
-        assert isinstance(self.columns.id.default, sa.Sequence)
+    @pytest.fixture
+    def models(self, User):
+        return [User]
+
+    def test_assigns_int_server_defaults(self, User):
+        assert isinstance(User.__table__.c.id.default, sa.Sequence)

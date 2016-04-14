@@ -1,22 +1,40 @@
+sudo: false
+language: python
 addons:
   postgresql: 9.3
 
 env:
-  - DB=mysql
-  - DB=postgres
-  - DB=sqlite
+  global:
+    - POSTGRESQL_DSN=postgresql://postgres@localhost/sqlalchemy_defaults_test
+    - MYSQL_DSN=mysql+pymysql://travis@localhost/sqlalchemy_defaults_test
 
 before_script:
-  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'create database sqlalchemy_defaults_test;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database sqlalchemy_defaults_test;'; fi"
+  - psql -c 'create database sqlalchemy_defaults_test;' -U postgres
+  - mysql -e 'create database sqlalchemy_defaults_test;'
 
-language: python
-python:
-  - 2.6
-  - 2.7
-  - 3.3
-  - 3.4
+matrix:
+  include:
+  - python: 2.6
+    env:
+      - 'TOXENV="py26-{sqlite,postgresql,mysql}"'
+  - python: 2.7
+    env:
+      - 'TOXENV="py27-{sqlite,postgresql,mysql}"'
+  - python: 3.3
+    env:
+      - 'TOXENV="py33-{sqlite,postgresql,mysql}"'
+  - python: 3.4
+    env:
+      - 'TOXENV="py34-{sqlite,postgresql,mysql}"'
+  - python: 3.5
+    env:
+      - 'TOXENV="py35-{sqlite,postgresql,mysql}"'
+  - python: 2.7
+    env:
+      - "TOXENV=lint"
+
 install:
-  - pip install -e ".[test]"
+  - pip install tox
+
 script:
-  - py.test
+  - tox

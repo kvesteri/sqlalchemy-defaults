@@ -15,6 +15,7 @@ var
 sdist
 develop-eggs
 .installed.cfg
+.cache
 lib
 lib64
 
@@ -28,6 +29,9 @@ nosetests.xml
 
 # Translations
 *.mo
+
+# SublimeText
+*.sublime-*
 
 # Mr Developer
 .mr.developer.cfg
