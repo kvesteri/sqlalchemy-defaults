@@ -26,6 +26,6 @@ To type a bit less to run the tests you can save the command in a script:
 Resources
 ---------
 
-- `Documentation <http://sqlalchemy-defaults.readthedocs.org/>`_
+- `Documentation <https://sqlalchemy-defaults.readthedocs.io/>`_
 - `Issue Tracker <http://github.com/kvesteri/sqlalchemy-defaults/issues>`_
 - `Code <http://github.com/kvesteri/sqlalchemy-defaults/>`_
